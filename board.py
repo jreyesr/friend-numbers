@@ -5,8 +5,7 @@ class Board:
     SIZE = 5
 
     def __init__(self):
-        self._contents = [[Color.Blank for _ in range(Board.SIZE)] for _ in range(Board.SIZE)]
-        self.random_fill()
+        self.fill_with(Color.Blank)
 
     def __str__(self):
         rows = []
@@ -18,7 +17,10 @@ class Board:
         from random import choice
         for i in range(Board.SIZE):
             for j in range(Board.SIZE):
-                self.set_item(i, j, choice([element for element in Color if element.value != 0]))
+                self.set_item(i, j, choice([element for element in Color if element != Color.Blank]))
+
+    def fill_with(self, color):
+        self._contents = [[color for _ in range(Board.SIZE)] for _ in range(Board.SIZE)]
 
     def row(self, i):
         return self._contents[i]
