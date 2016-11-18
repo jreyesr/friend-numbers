@@ -22,10 +22,12 @@ from console_displayer import ConsoleDisplayer
 from gui_displayer import GuiDisplayer
 
 b = Board()
+b.random_fill()
+
 a = BoardAnalyst(b)
 d = ConsoleDisplayer(b, a)
 g = GuiDisplayer(b, a)
 
-b.random_fill()
 d.display()
-g.display()
+g.start()
+g.update()

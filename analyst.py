@@ -26,6 +26,8 @@ class BoardAnalyst:
         return [x for x in self.neighs(i, j) if self.board.item(x[0], x[1]) == self.board.item(i, j)]
 
     def has_friends(self, i, j):
+        if self.board.item(i, j) == Color.Blank:
+            return False
         return len(self.friend_neighs(i, j)) != 0
 
     def all_friends(self, i, j):
