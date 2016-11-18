@@ -43,7 +43,7 @@ class BoardAnalyst:
 
     def score(self, squares_list):
         # TODO Put intelligent info here!!!
-        return 0
+        return 10
 
     def any_friends(self):
         for i in range(Board.SIZE):

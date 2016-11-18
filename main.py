@@ -16,7 +16,16 @@
 # find_all_friends('E')
 # print(already_seen)
 
+from analyst import BoardAnalyst
 from board import Board
+from console_displayer import ConsoleDisplayer
+from gui_displayer import GuiDisplayer
 
 b = Board()
-print(b)
+a = BoardAnalyst(b)
+d = ConsoleDisplayer(b, a)
+g = GuiDisplayer(b, a)
+
+b.random_fill()
+d.display()
+g.display()

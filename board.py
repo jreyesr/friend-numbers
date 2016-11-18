@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class Board:
-    SIZE = 5
+    SIZE = 10
 
     def __init__(self):
         self.fill_with(Color.Blank)

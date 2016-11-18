@@ -6,7 +6,7 @@ class ConsoleDisplayer:
         self._board = board
         self._analyst = analyst
 
-    def display_board(self):
+    def display(self):
         for i in range(self._board.SIZE):
             print(ascii_uppercase[i] + "\u2502" + ' '.join([str(x.value) for x in self._board.row(i)]))
         print(" \u2514" + "\u2500" * (self._board.SIZE * 2 - 1))
