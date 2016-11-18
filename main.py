@@ -29,5 +29,6 @@ d = ConsoleDisplayer(b, a)
 g = GuiDisplayer(b, a)
 
 d.display()
-g.start()
+root = g.main_window()
+g.open(root)
 g.update()
