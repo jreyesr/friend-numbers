@@ -50,8 +50,8 @@ class Board:
         self.set_column(j, self.column_compacted(j))
 
     def compact_all(self):
-        for j in range(Board.SIZE):
-            self.compact_column(j)
+        # TODO Implement this and delete pass
+        pass
 
     def clear_items(self, list_to_clear):
         for i, j in list_to_clear:
