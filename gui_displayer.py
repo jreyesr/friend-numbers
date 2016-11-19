@@ -17,9 +17,9 @@ class MainMenuWindow:
         frame = Frame(self.root, borderwidth=10)
         frame.grid(row=0, column=0, sticky=N + S + E + W)
 
-        Button(frame, text="New Game", command=lambda: self.start_new_game()).grid(row=0, column=0, sticky=E + W)
-        Button(frame, text="About", command=lambda: self.show_about()).grid(row=1, column=0, sticky=E + W)
-        Button(frame, text="Exit", command=lambda: self.exit(self.name)).grid(row=2, column=0, sticky=E + W)
+        Button(frame, text="Nuevo juego", command=lambda: self.start_new_game()).grid(row=0, column=0, sticky=E + W)
+        Button(frame, text="Acerca de...", command=lambda: self.show_about()).grid(row=1, column=0, sticky=E + W)
+        Button(frame, text="Salir", command=lambda: self.exit(self.name)).grid(row=2, column=0, sticky=E + W)
         Grid.columnconfigure(frame, 0, weight=1)
         for i in range(3):
             Grid.rowconfigure(frame, i, weight=1)
@@ -145,9 +145,9 @@ class GameWindow:
         self._score_label = lbl
         lbl.grid(row=0, column=0, sticky=N + S + E + W, padx=5, pady=5)
         # Exit game button
-        Button(lower_frame, text="End game", command=lambda: self.end_game()).grid(row=0, column=1,
-                                                                                   sticky=N + S + E + W, padx=20,
-                                                                                   pady=5)
+        Button(lower_frame, text="Terminar juego", command=lambda: self.end_game()).grid(row=0, column=1,
+                                                                                         sticky=N + S + E + W, padx=20,
+                                                                                         pady=5)
 
     def show(self):
         self.root.mainloop()
