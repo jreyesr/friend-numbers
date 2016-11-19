@@ -1,3 +1,6 @@
+from typing import List
+
+
 def simple_input(prompt: str) -> str:
     """
     Ask the user for input. Extremely thin wrapper around the common input() function
@@ -31,7 +34,7 @@ def condition_input(prompt: str, return_type=str, condition=None, error_message=
             print(error_message)
 
 
-def choice_input(prompt: str, choices: list[str], enumeration='number', error_message=None):
+def choice_input(prompt: str, choices: List[str], enumeration='number', error_message=None):
     """
     Ask the user for input from a set of choices
     :param prompt: The question the user will be asked

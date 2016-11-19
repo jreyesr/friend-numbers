@@ -6,7 +6,9 @@ from board import Board, Color
 
 
 class MainMenuWindow:
-    def __init__(self):
+    def __init__(self, player_name=None):
+        self.name = player_name
+
         self.root = Tk()
         self.root.geometry("+100+100")
         Grid.columnconfigure(self.root, 0, weight=1)
@@ -17,7 +19,7 @@ class MainMenuWindow:
 
         Button(frame, text="New Game", command=lambda: self.start_new_game()).grid(row=0, column=0, sticky=E + W)
         Button(frame, text="About", command=lambda: self.show_about()).grid(row=1, column=0, sticky=E + W)
-        Button(frame, text="Exit", command=lambda: self.exit()).grid(row=2, column=0, sticky=E + W)
+        Button(frame, text="Exit", command=lambda: self.exit(self.name)).grid(row=2, column=0, sticky=E + W)
         Grid.columnconfigure(frame, 0, weight=1)
         for i in range(3):
             Grid.rowconfigure(frame, i, weight=1)
@@ -35,8 +37,12 @@ class MainMenuWindow:
         self.root.destroy()
         new_window.show()
 
-    def exit(self):
+    def exit(self, name):
+        if self.name is not None:
+            new_window = GoodByeWindow(self.name)
         self.root.destroy()
+        if self.name is not None:
+            new_window.show()
 
 
 class NameWindow:
@@ -58,7 +64,8 @@ class NameWindow:
         board.random_fill()
         analyst = BoardAnalyst(board)
 
-        new_window = GameWindow(self.text_field.get(), board, analyst)
+        new_window = GameWindow(self.text_field.get() if len(self.text_field.get()) > 0 else "Sin nombre", board,
+                                analyst)
         self.root.destroy()
         new_window.show()
 
@@ -73,7 +80,11 @@ class AboutWindow:
         frame = Frame(self.root, borderwidth=10)
         text = Text(frame)
         text.pack(fill=BOTH, expand=1)
-        text.insert(END, "About the game\nDesigned for ESPOL (...)")
+        text.insert(END, "About the game\nDesigned for ESPOL (...)\n")
+
+        import datetime
+        text.insert(END, datetime.date.today().strftime("%A, %d/%m/%Y"))
+
         frame.grid(row=0, column=0, sticky=N + S + E + W)
 
         second_frame = Frame(self.root, borderwidth=10)
@@ -203,9 +214,35 @@ class GameOverWindow:
         Grid.rowconfigure(frame, 1, weight=1)
 
     def close(self):
-        new_window = MainMenuWindow()
+        new_window = MainMenuWindow(self.player_name if self.player_name != "Sin nombre" else None)
         self.root.destroy()
         new_window.show()
+
+    def show(self):
+        self.root.mainloop()
+
+
+class GoodByeWindow:
+    def __init__(self, player_name):
+        self.player_name = player_name
+
+        self.root = Tk()
+        self.root.geometry("+100+100")
+        Grid.columnconfigure(self.root, 0, weight=1)
+        Grid.rowconfigure(self.root, 0, weight=1)
+
+        frame = Frame(self.root, borderwidth=10)
+        frame.grid(row=0, column=0, sticky=N + S + E + W)
+
+        Label(frame, text="Hasta luego, {}".format(player_name)).grid(row=0, column=0, pady=5)
+        Button(frame, text="OK", command=lambda: self.close()).grid(row=1, column=0)
+
+        Grid.columnconfigure(frame, 0, weight=1)
+        Grid.rowconfigure(frame, 0, weight=1)
+        Grid.rowconfigure(frame, 1, weight=1)
+
+    def close(self):
+        self.root.destroy()
 
     def show(self):
         self.root.mainloop()
