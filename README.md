@@ -35,15 +35,16 @@ Returns True if there is any item in the board with friends (a.k.a. if the game 
 ConsoleDisplayer at console_displayer.py
 ---
 Runs the game in console mode. Execution flow is as follows:
+
 1. show_main_menu is called. It shows three options:
-    1. New game: calls start_new_game
-        1. Asks the user for his name
-        2. Creates a new Board, randomly filled, and an Analyst for that board. Then calls play_game.  
-            While there is something to be played:
-            * Print the board, ask the user for input. Only two inputs are valid: the exit string or a coordinate with friends and that is not Blank. Any other input displays an error message and repeats.  
-            The exit string terminates the loop.
-            * if the player entered coordinates, the score is increased and the board is updated. the new score is shown to the user.
-            * The loop is repeated.
+  1. New game: calls start_new_game
+    1. Asks the user for his name
+    2. Creates a new Board, randomly filled, and an Analyst for that board. Then calls play_game.  
+       While there is something to be played:
+       * Print the board, ask the user for input. Only two inputs are valid: the exit string or a coordinate with friends and that is not Blank. Any other input displays an error message and repeats.  
+       The exit string terminates the loop.
+       * If the player entered coordinates, the score is increased and the board is updated. the new score is shown to the user.
+       * The loop is repeated.
         3. When play_game returns the score of the game, calls print_game_over, which prints the player name and score.
         4. Control is returned to the main menu
     2. About: calls print_about and returns to main menu
@@ -52,10 +53,11 @@ Runs the game in console mode. Execution flow is as follows:
 GUIDisplayer at gui_displayer.py
 ---
 Runs the game in graphical mode. Execution flow is as follows:
+
 1. MainMenuWindow is created, with three buttons:
-    1. New Game: Creates NameWindow, which asks the user for his name. NameWindow then creates a Board, an Analyst and a GameWindow, which has two kinds of buttons:
-        * Coordinate buttons: These buttons are colored. Clicking on them updates the score, the board and the buttons, if the button corresponds to an item with friends; and does nothing otherwise.
-        * End game button: Finishes the game and creates a GameOverWindow, which shows the player name and the achieved score.
-            * GameOverWindow has a single button, which creates a new MainMenuWindow, resetting the execution flow to point 1.
-    2. About: Creates an AboutWindow, which has a single button that creates a new MainMenuWindow, resetting the execution flow to point 1.
-    3. Exit: Only if name is set, creates a GoodByeWindow, which shows a personalized message to last player. Then exits.
+ 1. New Game: Creates NameWindow, which asks the user for his name. NameWindow then creates a Board, an Analyst and a GameWindow, which has two kinds of buttons:
+    * Coordinate buttons: These buttons are colored. Clicking on them updates the score, the board and the buttons, if the button corresponds to an item with friends; and does nothing otherwise.
+    * End game button: Finishes the game and creates a GameOverWindow, which shows the player name and the achieved score.
+      * GameOverWindow has a single button, which creates a new MainMenuWindow, resetting the execution flow to point 1.
+  2. About: Creates an AboutWindow, which has a single button that creates a new MainMenuWindow, resetting the execution flow to point 1.
+  3. Exit: Only if name is set, creates a GoodByeWindow, which shows a personalized message to last player. Then exits.
