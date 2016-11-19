@@ -6,7 +6,24 @@ from board import Board, Color
 
 
 class MainMenuWindow:
+    """
+    A class that represents a Main Menu. Can branch to a NameWindow, to an AboutWindow or to a GoodByeWindow
+    On button 1: Branch to a NameWindow, which will eventually start a new game.
+    On button 2: Branch to an AboutWindow, which can only return to a MainMenuWindow.
+    On button 3: If any player has given a name, branch to a GoodByeWindow and pass it the player name. Else, kill app.
+    """
+
     def __init__(self, player_name=None):
+        """
+        Layout of MainMenuWindow is as follows:
+        root
+         |
+         +--frame
+              |
+              +--Button (Nuevo juego)
+              +--Button (Acerca de)
+              +--Button (Salir)
+        """
         self.name = player_name
 
         self.root = Tk()
@@ -46,7 +63,18 @@ class MainMenuWindow:
 
 
 class NameWindow:
+    """
+    A class that represents a Window that asks the user for his/her name. Will only branch to a GameWindow.
+    """
+
     def __init__(self):
+        """
+        Layout of NameWindow is as follows:
+        root
+         |
+         +--TextField
+         +--Button (OK)
+        """
         self.root = Tk()
         self.root.geometry("+100+100")
         Grid.columnconfigure(self.root, 0, weight=1)
@@ -71,7 +99,23 @@ class NameWindow:
 
 
 class AboutWindow:
+    """
+    A class that represent a Window that shows information about the program. Can only branch to a MainMenuWindow
+    """
+
     def __init__(self):
+        """
+        Layout of NameWindow is as follows:
+        root
+         |
+         +--frame
+         |    |
+         |    +--Text
+         |
+         +--second_frame
+              |
+              +--Button (OK)
+        """
         self.root = Tk()
         self.root.geometry("300x200+100+100")
         Grid.rowconfigure(self.root, 0, weight=1)
@@ -101,7 +145,25 @@ class AboutWindow:
 
 
 class GameWindow:
+    """
+    A class that represents a Game Window, where most of the processing happens. Can only branch to a GameOverWindow
+    """
+
     def __init__(self, player_name, board, analyst):
+        """
+        Layout of GameWindow is as follows:
+        root
+          |
+          +--upper_frame
+          |      |
+          |      +--Labels (in row (Board.SIZE+1) and column 1), total Board.SIZE*2
+          |      +--Buttons (in rows 1 to Board.SIZE and columns 2 to Board.SIZE+1, total Board.SIZE^2
+          |
+          +--lower_frame
+                 |
+                 +--Label (Puntos...)
+                 +--Button (Terminar juego)
+        """
         self.player_name = player_name
         self.score = 0
 
@@ -158,6 +220,11 @@ class GameWindow:
         new_window.show()
 
     def button_clicked(self, i, j):
+        """
+        To be called when a button on the button grid is clicked. If item in said position in the board is not Blank
+        and has friends, remove all friends and update score, board and grid accordingly. If there are not any friends
+        for any button, end game automatically.
+        """
         if not self.analyst.has_friends(i, j) or self.board.item(i, j) == Color.Blank:
             return
         to_clear = self.analyst.all_friends(i, j)
@@ -169,9 +236,12 @@ class GameWindow:
         if not self.analyst.any_friends():
             self.end_game()
 
-        self.update()
+        self.update_button_colors()
 
-    def update(self):
+    def update_button_colors(self):
+        """
+        Updates the button grid with the new colors. To be called after changing the Board.
+        """
         for i in range(self.board.SIZE):
             for j in range(self.board.SIZE):
                 try:
@@ -180,6 +250,12 @@ class GameWindow:
                     pass
 
     def get_color(self, i, j):
+        """
+        Return a string representation for the color in position (i, j) in the Board
+        :param i: The row of the item
+        :param j: The column of the item
+        :return: A string to be used in bg
+        """
         if self.board.item(i, j) == Color.A:
             return 'red'
         elif self.board.item(i, j) == Color.B:
@@ -193,7 +269,21 @@ class GameWindow:
 
 
 class GameOverWindow:
+    """
+    A class representing a 'Game Over' window. Can only branch to a MainMenuWindow.
+    """
+
     def __init__(self, player_name, score):
+        """
+        Layout of GameOverWindow is as follows:
+        root
+          |
+          +--frame
+               |
+               +--Label (player name)
+               +--Label (score)
+               +--Button (OK)
+        """
         self.player_name = player_name
         self.score = score
 
@@ -223,7 +313,21 @@ class GameOverWindow:
 
 
 class GoodByeWindow:
+    """
+    A class representing a 'Goodbye' window. Will only branch to nothingness...
+    Is only called when MainMenuWindow has a player name stored
+    """
+
     def __init__(self, player_name):
+        """
+        Layout of GoodByeWindow is as follows:
+        root
+          |
+          +--frame
+               |
+               +--Label (player name, goodbye message)
+               +--Button (OK)
+        """
         self.player_name = player_name
 
         self.root = Tk()
