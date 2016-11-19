@@ -6,6 +6,10 @@ from board import Board
 
 
 def show_main_menu():
+    """
+    Print the main menu and ask the user for a choice. 1 starts a new game, which eventually returns the player name.
+    2 prints info about the program. 3 exits the menu. If a player name has been given, print a good bye to the player.
+    """
     user_wants_to_exit = False
     last_player = None
     while not user_wants_to_exit:
@@ -17,12 +21,14 @@ def show_main_menu():
             print_about()
         elif user_action == 2:
             user_wants_to_exit = True
-    # Print goodbye message (and name?)
     if last_player is not None:
         print("Hasta luego, {}".format(last_player))
 
 
 def print_about():
+    """
+    Print information about the program and return to caller
+    """
     print("\nAbout the game\nDesigned for ESPOL (...)")
     import datetime
     print(datetime.date.today().strftime("%A, %d/%m/%Y"))
@@ -30,6 +36,11 @@ def print_about():
 
 
 def start_new_game():
+    """
+    Ask the user for name, create a Board and an Analyst, enter main game loop (which will return the score) and then
+    show a 'Game Over' window with the name and the score
+    :return: A string containing the player name, or None if player didn´t originally give a name
+    """
     print()
     name = ask_name()
 
@@ -45,11 +56,21 @@ def start_new_game():
 
 
 def ask_name():
+    """
+    Ask the user for his name and ensure it has any visible characters
+    :return: The user's input if it contained anything other than whitespaces, else 'Sin nombre'
+    """
     player_name = simple_input("Ingrese su nombre: ")
-    return player_name if len(player_name) > 0 else "Sin nombre"
+    return player_name if len(player_name.strip()) > 0 else "Sin nombre"
 
 
 def play_game(board: Board, analyst: BoardAnalyst):
+    """
+    Begin a new game on the given Board, using the given Analyst. Return the final score
+    :param board: The Board to play on
+    :param analyst: The Analyst for the Board
+    :return: The score of the game (obtained either by the player ending it or by the game being unable to continue)
+    """
     score = 0
     while True:
         print()
@@ -72,6 +93,12 @@ def play_game(board: Board, analyst: BoardAnalyst):
 
 
 def is_valid(user_input: str, analyst: BoardAnalyst):
+    """
+    Check the player's input corresponds to an item he can play on
+    :param user_input: A string that has to represent a VALID position, WITH friends, and NOT BLANK; or the EXIT string
+    :param analyst: The Analyst for the game session
+    :return: True if the user's input was sensible, False otherwise
+    """
     if user_input.upper() == 'S':
         return True
     try:
@@ -82,6 +109,11 @@ def is_valid(user_input: str, analyst: BoardAnalyst):
 
 
 def process_input(user_input: str):
+    """
+    Takes a user input and converts it into a position (int, int). Assumes the position is valid (no exception handling)
+    :param user_input: The string to be converted to a tuple
+    :return: None if the user entered the exit string. Otherwise, a tuple (int, int)
+    """
     if user_input.upper() == 'S':
         return None
     i = ascii_uppercase.index(user_input[0].upper())
@@ -90,10 +122,19 @@ def process_input(user_input: str):
 
 
 def print_game_over(name: str, score: int):
+    """
+    Print a short 'Game Over' window showing the player's name and score
+    :param name: The name of the player
+    :param score: The score the player achieved
+    """
     print("Jugador: {}\nPuntaje: {}".format(name, score))
 
 
 def print_board(board):
+    """
+    Pretty-print a Board. Use in Terminal/CMD for best results (PyCharm/IPython don't work well with Unicode box chars)
+    :param board: The Board to be printed.
+    """
     for i in range(board.SIZE):
         print(ascii_uppercase[i] + "\u2502" + ' '.join([str(x.value) for x in board.row(i)]))
     # Horizontal separator
