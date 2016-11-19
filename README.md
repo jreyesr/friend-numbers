@@ -1,8 +1,9 @@
-## friend-numbers
+# friend-numbers
 
 A game about matching numbers. Choose coordinates to clear said location and all neighbours of the same color.
 
-### Board at board.py
+Board at board.py
+---
 Stores the data contained in a single game board. Most important methods are:
 #### random_fill
 Should be used only once in every Board, right after creation. Populates the Board randomly with every color in Color, except Blank.
@@ -17,7 +18,8 @@ Groups all Blanks in column j at the top, and any other items at the bottom, wit
 #### compact_all()
 Applies compact_column() to every column in the board.
 
-### BoardAnalyst at analyst.py
+BoardAnalyst at analyst.py
+---
 Reports data about a Board. Most important methods are:
 #### neighs(i, j)
 Returns all neighbours of item (i, j): two if (i, j) is a corner, three if it is a side and four otherwise.
@@ -30,7 +32,8 @@ Returns the score associated with a list of items. Score varies based on the len
 #### any_friends()
 Returns True if there is any item in the board with friends (a.k.a. if the game can continue)
 
-### ConsoleDisplayer at console_displayer.py
+ConsoleDisplayer at console_displayer.py
+---
 Runs the game in console mode. Execution flow is as follows:
 1. show_main_menu is called. It shows three options:
     1. New game: calls start_new_game
@@ -46,7 +49,8 @@ Runs the game in console mode. Execution flow is as follows:
     2. About: calls print_about and returns to main menu
     3. Exit: Prints personalized message to player (only if name is set). Then exits.
 
-### GUIDisplayer at gui_displayer.py
+GUIDisplayer at gui_displayer.py
+---
 Runs the game in graphical mode. Execution flow is as follows:
 1. MainMenuWindow is created, with three buttons:
     1. New Game: Creates NameWindow, which asks the user for his name. NameWindow then creates a Board, an Analyst and a GameWindow, which has two kinds of buttons:
