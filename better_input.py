@@ -1,4 +1,4 @@
-def simple_input(prompt):
+def simple_input(prompt: str) -> str:
     """
     Ask the user for input. Extremely thin wrapper around the common input() function
     :param prompt: Is printed to standard output before reading input
@@ -7,7 +7,7 @@ def simple_input(prompt):
     return input(prompt)
 
 
-def condition_input(prompt, return_type=str, condition=None, error_message=None):
+def condition_input(prompt: str, return_type=str, condition=None, error_message=None):
     """
     Ask the user for input, checking if it meets a condition
     :param prompt: The question the user will be asked
@@ -31,7 +31,7 @@ def condition_input(prompt, return_type=str, condition=None, error_message=None)
             print(error_message)
 
 
-def choice_input(prompt, choices, enumeration='number', error_message=None):
+def choice_input(prompt: str, choices: list[str], enumeration='number', error_message=None):
     """
     Ask the user for input from a set of choices
     :param prompt: The question the user will be asked
