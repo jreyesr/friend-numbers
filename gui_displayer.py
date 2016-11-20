@@ -51,7 +51,7 @@ class MainMenuWindow:
         new_window.show()
 
     def show_about(self):
-        new_window = AboutWindow()
+        new_window = AboutWindow(self.name)
         self.root.destroy()
         new_window.show()
 
@@ -108,7 +108,7 @@ class AboutWindow:
     A class that represent a Window that shows information about the program. Can only branch to a MainMenuWindow
     """
 
-    def __init__(self):
+    def __init__(self, player_name):
         """
         Layout of NameWindow is as follows:
         root
@@ -121,6 +121,8 @@ class AboutWindow:
               |
               +--Button (OK)
         """
+        self.name = player_name
+
         self.root = Tk()
         self.root.geometry("300x200+100+100")
         Grid.rowconfigure(self.root, 0, weight=1)
@@ -147,7 +149,7 @@ class AboutWindow:
         self.root.mainloop()
 
     def close(self, _):
-        new_window = MainMenuWindow()
+        new_window = MainMenuWindow(self.name)
         self.root.destroy()
         new_window.show()
 
