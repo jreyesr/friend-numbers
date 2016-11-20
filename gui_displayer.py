@@ -72,6 +72,7 @@ class NameWindow:
         Layout of NameWindow is as follows:
         root
          |
+         +--Label
          +--TextField
          +--Button (OK)
         """
@@ -80,9 +81,10 @@ class NameWindow:
         Grid.columnconfigure(self.root, 0, weight=1)
         Grid.rowconfigure(self.root, 0, weight=1)
 
+        Label(self.root, text="Nombre").grid(row=0, column=0, padx=5, pady=5)
         self.text_field = Entry(self.root, justify=CENTER)
-        self.text_field.grid(row=0, column=0, sticky=E + W, padx=5, pady=5)
-        Button(self.root, text="OK", command=lambda: self.start_game()).grid(row=1, column=0, padx=5, pady=5)
+        self.text_field.grid(row=1, column=0, sticky=E + W, padx=5, pady=5)
+        Button(self.root, text="OK", command=lambda: self.start_game()).grid(row=2, column=0, padx=5, pady=5)
 
     def show(self):
         self.root.mainloop()
