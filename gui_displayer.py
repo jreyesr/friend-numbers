@@ -27,6 +27,7 @@ class MainMenuWindow:
         self.name = player_name
 
         self.root = Tk()
+        self.root.focus_force()
         self.root.geometry("+100+100")
         Grid.columnconfigure(self.root, 0, weight=1)
         Grid.rowconfigure(self.root, 0, weight=1)
@@ -36,7 +37,7 @@ class MainMenuWindow:
 
         Button(frame, text="Nuevo juego", command=lambda: self.start_new_game()).grid(row=0, column=0, sticky=E + W)
         Button(frame, text="Acerca de...", command=lambda: self.show_about()).grid(row=1, column=0, sticky=E + W)
-        Button(frame, text="Salir", command=lambda: self.exit(self.name)).grid(row=2, column=0, sticky=E + W)
+        Button(frame, text="Salir", command=lambda: self.exit()).grid(row=2, column=0, sticky=E + W)
         Grid.columnconfigure(frame, 0, weight=1)
         for i in range(3):
             Grid.rowconfigure(frame, i, weight=1)
@@ -54,7 +55,7 @@ class MainMenuWindow:
         self.root.destroy()
         new_window.show()
 
-    def exit(self, name):
+    def exit(self):
         if self.name is not None:
             new_window = GoodByeWindow(self.name)
         self.root.destroy()
@@ -83,13 +84,15 @@ class NameWindow:
 
         Label(self.root, text="Nombre").grid(row=0, column=0, padx=5, pady=5)
         self.text_field = Entry(self.root, justify=CENTER)
+        self.text_field.bind("<Return>", self.start_game)
+        self.text_field.focus_force()
         self.text_field.grid(row=1, column=0, sticky=E + W, padx=5, pady=5)
-        Button(self.root, text="OK", command=lambda: self.start_game()).grid(row=2, column=0, padx=5, pady=5)
+        Button(self.root, text="OK", command=lambda: self.start_game(None)).grid(row=2, column=0, padx=5, pady=5)
 
     def show(self):
         self.root.mainloop()
 
-    def start_game(self):
+    def start_game(self, _):
         board = Board()
         board.random_fill()
         analyst = BoardAnalyst(board)
@@ -135,12 +138,15 @@ class AboutWindow:
 
         second_frame = Frame(self.root, borderwidth=10)
         second_frame.grid(row=1, column=0)
-        Button(second_frame, text="OK", command=lambda: self.close()).grid(row=0, column=0)
+        ok_button = Button(second_frame, text="OK", command=lambda: self.close(None))
+        ok_button.grid(row=0, column=0)
+        ok_button.focus_force()
+        ok_button.bind("<Return>", self.close)
 
     def show(self):
         self.root.mainloop()
 
-    def close(self):
+    def close(self, _):
         new_window = MainMenuWindow()
         self.root.destroy()
         new_window.show()
@@ -174,6 +180,7 @@ class GameWindow:
         self.buttons = [[0 for _ in range(self.board.SIZE + 1)] for _ in range(self.board.SIZE + 1)]
 
         self.root = Tk()
+        self.root.focus_force()
         self.root.geometry("500x500+100+100")
         Grid.rowconfigure(self.root, 0, weight=1)
         Grid.columnconfigure(self.root, 0, weight=1)
@@ -299,13 +306,16 @@ class GameOverWindow:
 
         Label(frame, text=player_name).grid(row=0, column=0)
         Label(frame, text="{} puntos".format(score)).grid(row=1, column=0)
-        Button(frame, text="OK", command=lambda: self.close()).grid(row=2, column=0)
+        ok_button = Button(frame, text="OK", command=lambda: self.close(None))
+        ok_button.grid(row=2, column=0)
+        ok_button.focus_force()
+        ok_button.bind("<Return>", self.close)
 
         Grid.columnconfigure(frame, 0, weight=1)
         Grid.rowconfigure(frame, 0, weight=1)
         Grid.rowconfigure(frame, 1, weight=1)
 
-    def close(self):
+    def close(self, _):
         new_window = MainMenuWindow(self.player_name if self.player_name != "Sin nombre" else None)
         self.root.destroy()
         new_window.show()
@@ -341,13 +351,16 @@ class GoodByeWindow:
         frame.grid(row=0, column=0, sticky=N + S + E + W)
 
         Label(frame, text="Hasta luego, {}".format(player_name)).grid(row=0, column=0, pady=5)
-        Button(frame, text="OK", command=lambda: self.close()).grid(row=1, column=0)
+        ok_button = Button(frame, text="OK", command=lambda: self.close(None))
+        ok_button.grid(row=1, column=0)
+        ok_button.focus_force()
+        ok_button.bind("<Return>", self.close)
 
         Grid.columnconfigure(frame, 0, weight=1)
         Grid.rowconfigure(frame, 0, weight=1)
         Grid.rowconfigure(frame, 1, weight=1)
 
-    def close(self):
+    def close(self, _):
         self.root.destroy()
 
     def show(self):
