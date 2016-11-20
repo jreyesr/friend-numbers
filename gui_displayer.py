@@ -46,7 +46,7 @@ class MainMenuWindow:
         self.root.mainloop()
 
     def start_new_game(self):
-        new_window = NameWindow()
+        new_window = NameWindow(self.name)
         self.root.destroy()
         new_window.show()
 
@@ -68,7 +68,7 @@ class NameWindow:
     A class that represents a Window that asks the user for his/her name. Will only branch to a GameWindow.
     """
 
-    def __init__(self):
+    def __init__(self, last_player_name):
         """
         Layout of NameWindow is as follows:
         root
@@ -84,8 +84,11 @@ class NameWindow:
 
         Label(self.root, text="Nombre").grid(row=0, column=0, padx=5, pady=5)
         self.text_field = Entry(self.root, justify=CENTER)
+        if last_player_name is not None:
+            self.text_field.insert(END, last_player_name)
         self.text_field.bind("<Return>", self.start_game)
         self.text_field.focus_force()
+        self.text_field.select_range(0, END)
         self.text_field.grid(row=1, column=0, sticky=E + W, padx=5, pady=5)
         Button(self.root, text="OK", command=lambda: self.start_game(None)).grid(row=2, column=0, padx=5, pady=5)
 
