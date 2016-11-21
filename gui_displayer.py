@@ -127,14 +127,19 @@ class AboutWindow:
         self.name = player_name
 
         self.root = Tk()
-        self.root.geometry("300x200+100+100")
+        self.root.geometry("700x300+100+100")
         Grid.rowconfigure(self.root, 0, weight=1)
         Grid.columnconfigure(self.root, 0, weight=1)
 
         frame = Frame(self.root, borderwidth=10)
         text = Text(frame)
         text.pack(fill=BOTH, expand=1)
-        text.insert(END, "About the game\nDesigned for ESPOL (...)\n")
+        text.insert(END, "Acerca del juego\n\n")
+        text.insert(END, "El juego consiste en eliminar los cuadros adyacentes del mismo color de un tablero.\n")
+        text.insert(END, "Los cuadros están colocados de manera aleatoria.\n")
+        text.insert(END, "Cuando se eliminan cuadros, los demás se desplazan hacia abajo.\n\n")
+        text.insert(END, "Diseñado para Fundamentos de Programación, ESPOL\n")
+        text.insert(END, "Anthony Adachi (KimCordero213)\nJosé Reyes (jreyesr, 0xC0FFEE)\n\n")
 
         import datetime
         text.insert(END, datetime.date.today().strftime("%A, %d/%m/%Y"))

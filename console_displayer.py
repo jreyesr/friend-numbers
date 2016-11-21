@@ -29,7 +29,13 @@ def print_about():
     """
     Print information about the program and return to caller
     """
-    print("\nAbout the game\nDesigned for ESPOL (...)")
+    print()
+    print("Acerca del juego")
+    print("El juego consiste en eliminar los cuadros adyacentes del mismo color de un tablero.")
+    print("Los cuadros están colocados de manera aleatoria.")
+    print("Cuando se eliminan cuadros, los demás se desplazan hacia abajo.")
+    print("Diseñado para Fundamentos de Programación, ESPOL")
+    print("Anthony Adachi (KimCordero213)\nJosé Reyes (jreyesr, 0xC0FFEE)")
     import datetime
     print(datetime.date.today().strftime("%A, %d/%m/%Y"))
     print()
