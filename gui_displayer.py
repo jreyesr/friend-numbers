@@ -35,9 +35,24 @@ class MainMenuWindow:
         frame = Frame(self.root, borderwidth=10)
         frame.grid(row=0, column=0, sticky=N + S + E + W)
 
-        Button(frame, text="Nuevo juego", command=lambda: self.start_new_game()).grid(row=0, column=0, sticky=E + W)
-        Button(frame, text="Acerca de...", command=lambda: self.show_about()).grid(row=1, column=0, sticky=E + W)
-        Button(frame, text="Salir", command=lambda: self.exit()).grid(row=2, column=0, sticky=E + W)
+        btn_new_game = Button(frame, text="Nuevo juego", command=lambda: self.start_new_game())
+        btn_new_game.grid(row=0, column=0, sticky=E + W)
+        btn_new_game.focus_force()
+        btn_new_game.bind("<Return>", lambda _: self.start_new_game())
+
+        btn_about = Button(frame, text="Acerca de...", command=lambda: self.show_about())
+        btn_about.bind("<Return>", lambda _: self.show_about())
+        btn_about.grid(row=1, column=0, sticky=E + W)
+
+        btn_exit = Button(frame, text="Salir", command=lambda: self.exit())
+        btn_exit.bind("<Return>", lambda _: self.exit())
+        btn_exit.grid(row=2, column=0, sticky=E + W)
+
+        btn_new_game.bind("<Down>", lambda _: btn_about.focus_set())
+        btn_about.bind("<Down>", lambda _: btn_exit.focus_set())
+        btn_about.bind("<Up>", lambda _: btn_new_game.focus_set())
+        btn_exit.bind("<Up>", lambda _: btn_about.focus_set())
+
         Grid.columnconfigure(frame, 0, weight=1)
         for i in range(3):
             Grid.rowconfigure(frame, i, weight=1)
