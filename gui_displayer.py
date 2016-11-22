@@ -74,28 +74,44 @@ class NameWindow:
         root
          |
          +--Label
+         +--RadioButtons
+         +--Label
          +--TextField
          +--Button (OK)
         """
         self.root = Tk()
         self.root.geometry("+100+100")
         Grid.columnconfigure(self.root, 0, weight=1)
-        Grid.rowconfigure(self.root, 0, weight=1)
+        Grid.rowconfigure(self.root, 4, weight=1)
 
-        Label(self.root, text="Nombre").grid(row=0, column=0, padx=5, pady=5)
+        Label(self.root, text="Dificultad").grid(row=0, column=0, padx=5, pady=5)
+
+        frame = Frame(self.root)
+        self.difficulty = IntVar(frame)
+        self.difficulty.set(10)
+        Grid.columnconfigure(frame, 0, weight=1)
+        for i in range(3):
+            Radiobutton(frame, text=["Fácil", "Medio", "Difícil"][i], variable=self.difficulty,
+                        value=[8, 10, 15][i]).grid(row=0, column=i)
+            Grid.columnconfigure(frame, i, weight=1)
+        frame.grid(row=1, column=0)
+
+        Label(self.root, text="Nombre").grid(row=2, column=0, padx=5, pady=5)
         self.text_field = Entry(self.root, justify=CENTER)
         if last_player_name is not None:
             self.text_field.insert(END, last_player_name)
         self.text_field.bind("<Return>", self.start_game)
         self.text_field.focus_force()
         self.text_field.select_range(0, END)
-        self.text_field.grid(row=1, column=0, sticky=E + W, padx=5, pady=5)
-        Button(self.root, text="OK", command=lambda: self.start_game(None)).grid(row=2, column=0, padx=5, pady=5)
+        self.text_field.grid(row=3, column=0, sticky=E + W, padx=5, pady=5)
+        Button(self.root, text="OK", command=lambda: self.start_game(None)).grid(row=4, column=0, padx=5, pady=5,
+                                                                                 sticky=S)
 
     def show(self):
         self.root.mainloop()
 
     def start_game(self, _):
+        Board.SIZE = self.difficulty.get()
         board = Board()
         board.random_fill()
         analyst = BoardAnalyst(board)
