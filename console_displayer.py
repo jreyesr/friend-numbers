@@ -13,7 +13,8 @@ def show_main_menu():
     user_wants_to_exit = False
     last_player = None
     while not user_wants_to_exit:
-        user_action = choice_input("Ingrese una opción: ", ["Nuevo juego", "Acerca de", "Salir"],
+        user_action = choice_input("Ingrese una opción: ",
+                                   ["Nuevo juego", "Acerca de", "Salir"],
                                    error_message="No es una opción válida")
         if user_action == 0:
             last_player = start_new_game()
@@ -109,7 +110,8 @@ def is_valid(user_input: str, analyst: BoardAnalyst):
         return True
     try:
         i, j = process_input(user_input)
-        return analyst.has_friends(i, j)
+        return 0 <= i < Board.SIZE and 0 <= j < Board.SIZE and analyst.has_friends(
+            i, j)
     except (IndexError, ValueError):
         return False
 
@@ -142,7 +144,8 @@ def print_board(board):
     :param board: The Board to be printed.
     """
     for i in range(board.SIZE):
-        print(ascii_uppercase[i] + "\u2502" + ' '.join([str(x.value) for x in board.row(i)]))
+        print(ascii_uppercase[i] + "\u2502" + ' '.join(
+            [str(x.value) for x in board.row(i)]))
     # Horizontal separator
     print(" \u2514" + "\u2500" * (board.SIZE * 2))
     # Bottom row of numbers
