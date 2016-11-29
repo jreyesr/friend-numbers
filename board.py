@@ -8,7 +8,8 @@ class Board:
         """
         Initialize a blank Board, of size Board.SIZE x Board.SIZE
         """
-        self._contents = [[Color.Blank for _ in range(Board.SIZE)] for _ in range(Board.SIZE)]
+        self._contents = [[Color.Blank for _ in range(Board.SIZE)] for _ in
+                          range(Board.SIZE)]
 
     def __str__(self):
         """
@@ -16,7 +17,8 @@ class Board:
         """
         rows = []
         for i in range(Board.SIZE):
-            rows.append("|" + " ".join([str(c.value) for c in self.row(i)]) + "|")
+            rows.append(
+                "|" + " ".join([str(c.value) for c in self.row(i)]) + "|")
         return '\n'.join(rows)
 
     def random_fill(self):
@@ -26,14 +28,16 @@ class Board:
         from random import choice
         for i in range(Board.SIZE):
             for j in range(Board.SIZE):
-                self.set_item(i, j, choice([element for element in Color if element != Color.Blank]))
+                self.set_item(i, j, choice(
+                    [element for element in Color if element != Color.Blank]))
 
     def fill_with(self, color):
         """
         Fill the board with the designated color
         :param color: The Color to fill the board with
         """
-        self._contents = [[color for _ in range(Board.SIZE)] for _ in range(Board.SIZE)]
+        self._contents = [[color for _ in range(Board.SIZE)] for _ in
+                          range(Board.SIZE)]
 
     def row(self, i):
         """
@@ -96,8 +100,8 @@ class Board:
         self.set_column(j, self.column_compacted(j))
 
     def compact_all(self):
-        # TODO Implement this and delete pass
-        pass
+        for j in range(Board.SIZE):
+            self.compact_column(j)
 
     def clear_items(self, list_to_clear):
         """

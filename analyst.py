@@ -39,7 +39,8 @@ class BoardAnalyst:
         """
         if self.board.item(i, j) == Color.Blank:
             return []
-        return [x for x in self.neighs(i, j) if self.board.item(x[0], x[1]) == self.board.item(i, j)]
+        return [x for x in self.neighs(i, j) if
+                self.board.item(x[0], x[1]) == self.board.item(i, j)]
 
     def has_friends(self, i, j):
         """
@@ -76,8 +77,31 @@ class BoardAnalyst:
         return self._analyze(updated_seen, new_to_check)
 
     def score(self, squares_list):
-        # TODO Put intelligent info here!!!
-        return 10
+        """
+        Return the score associated with a specific list of squares.
+        Assumes squares_list has at least two elements and that they are all friends
+        :param squares_list: The list of positions to remove
+        :return: An int representing the score to be given for squares_list
+        """
+        x = len(squares_list)
+        if x == 2:
+            return 2
+        elif x == 3:
+            return 4
+        elif x == 4:
+            return 8
+        elif x == 5:
+            return 14
+        elif x == 6:
+            return 22
+        elif x == 7:
+            return 32
+        elif x == 8:
+            return 44
+        elif x == 58:
+            return 58
+        else:
+            return 74
 
     def any_friends(self):
         """
