@@ -1,10 +1,13 @@
 from string import ascii_uppercase
 
-from terminaltables import AsciiTable
+from colorama import init, Fore, Back
+from terminaltables import SingleTable
 
 from analyst import BoardAnalyst
 from better_input import choice_input, simple_input
 from board import Board
+
+init()
 
 
 def show_main_menu():
@@ -161,12 +164,17 @@ def print_board(board):
     :param board: The Board to be printed.
     """
     table_data = []
+    print(Back.WHITE + Fore.BLACK, end='')
     for i in range(board.SIZE):
         table_data.append(
-            [ascii_uppercase[i]] + [str(x.value) for x in board.row(i)])
-    table_data.append([""] + [str(x + 1) for x in range(board.SIZE)])
-    table = AsciiTable(table_data)
+            [Fore.RED + ascii_uppercase[i] + Fore.BLACK] + [str(x.value) for x
+                                                            in board.row(i)])
+    table_data.append(
+        [""] + [Fore.RED + str(x + 1) + Fore.BLACK for x in
+                range(board.SIZE)])
+    table = SingleTable(table_data)
     table.inner_column_border = False
     table.inner_heading_row_border = False
     table.inner_footing_row_border = True
     print(table.table)
+    print(Fore.RESET + Back.RESET, end='')
