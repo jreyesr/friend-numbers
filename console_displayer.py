@@ -1,7 +1,7 @@
 from string import ascii_uppercase
 
-from colorama import init, Fore, Back
-from terminaltables import SingleTable
+from colorama import init, Fore, Back, Style
+from terminaltables import DoubleTable
 
 from analyst import BoardAnalyst
 from better_input import choice_input, simple_input
@@ -40,15 +40,17 @@ def print_about():
     Print information about the program and return to caller
     """
     print()
-    print("Acerca del juego")
+    print(Fore.CYAN + "Acerca del juego" + Fore.RESET)
     print(
         "El juego consiste en eliminar los cuadros adyacentes del mismo color de un tablero.")
     print("Los cuadros están colocados de manera aleatoria.")
     print("Cuando se eliminan cuadros, los demás se desplazan hacia abajo.")
     print("Diseñado para Fundamentos de Programación, ESPOL")
-    print("Anthony Adachi (KimCordero213)\nJosé Reyes (jreyesr, 0xC0FFEE)")
+    print(
+        Fore.CYAN + "Anthony Adachi (KimCordero213)\nJosé Reyes (jreyesr, 0xC0FFEE)" + Fore.RESET)
     import datetime
-    print(datetime.date.today().strftime("%A, %d/%m/%Y"))
+    print(Fore.YELLOW + datetime.date.today().strftime(
+        "%A, %d/%m/%Y") + Fore.RESET)
     print()
 
 
@@ -155,7 +157,9 @@ def print_game_over(name: str, score: int):
     :param name: The name of the player
     :param score: The score the player achieved
     """
+    print(Fore.CYAN + Style.BRIGHT)
     print("Jugador: {}\nPuntaje: {}".format(name, score))
+    print(Style.RESET_ALL, end='')
 
 
 def print_board(board):
@@ -172,7 +176,7 @@ def print_board(board):
     table_data.append(
         [""] + [Fore.RED + str(x + 1) + Fore.BLACK for x in
                 range(board.SIZE)])
-    table = SingleTable(table_data)
+    table = DoubleTable(table_data)
     table.inner_column_border = False
     table.inner_heading_row_border = False
     table.inner_footing_row_border = True
