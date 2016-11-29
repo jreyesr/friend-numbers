@@ -1,5 +1,7 @@
 from string import ascii_uppercase
 
+from terminaltables import AsciiTable
+
 from analyst import BoardAnalyst
 from better_input import choice_input, simple_input
 from board import Board
@@ -158,10 +160,13 @@ def print_board(board):
     Pretty-print a Board. Use in Terminal/CMD for best results (PyCharm/IPython don't work well with Unicode box chars)
     :param board: The Board to be printed.
     """
+    table_data = []
     for i in range(board.SIZE):
-        print(ascii_uppercase[i] + "\u2502" + ' '.join(
-            [str(x.value) for x in board.row(i)]))
-    # Horizontal separator
-    print(" \u2514" + "\u2500" * (board.SIZE * 2))
-    # Bottom row of numbers
-    print("  " + ' '.join(str(x + 1) for x in range(board.SIZE)))
+        table_data.append(
+            [ascii_uppercase[i]] + [str(x.value) for x in board.row(i)])
+    table_data.append([""] + [str(x + 1) for x in range(board.SIZE)])
+    table = AsciiTable(table_data)
+    table.inner_column_border = False
+    table.inner_heading_row_border = False
+    table.inner_footing_row_border = True
+    print(table.table)
