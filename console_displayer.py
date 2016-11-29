@@ -12,15 +12,19 @@ def show_main_menu():
     """
     user_wants_to_exit = False
     last_player = None
+    wanted_difficulty = 10
     while not user_wants_to_exit:
         user_action = choice_input("Ingrese una opción: ",
-                                   ["Nuevo juego", "Acerca de", "Salir"],
+                                   ["Nuevo juego", "Dificultad", "Acerca de",
+                                    "Salir"],
                                    error_message="No es una opción válida")
         if user_action == 0:
-            last_player = start_new_game()
+            last_player = start_new_game(wanted_difficulty)
         elif user_action == 1:
-            print_about()
+            wanted_difficulty = ask_difficulty()
         elif user_action == 2:
+            print_about()
+        elif user_action == 3:
             user_wants_to_exit = True
     if last_player is not None:
         print("Hasta luego, {}".format(last_player))
@@ -32,7 +36,8 @@ def print_about():
     """
     print()
     print("Acerca del juego")
-    print("El juego consiste en eliminar los cuadros adyacentes del mismo color de un tablero.")
+    print(
+        "El juego consiste en eliminar los cuadros adyacentes del mismo color de un tablero.")
     print("Los cuadros están colocados de manera aleatoria.")
     print("Cuando se eliminan cuadros, los demás se desplazan hacia abajo.")
     print("Diseñado para Fundamentos de Programación, ESPOL")
@@ -42,7 +47,16 @@ def print_about():
     print()
 
 
-def start_new_game():
+def ask_difficulty():
+    print()
+    x = choice_input("Elija una dificultad: ",
+                     ["Fácil (8x8)", "Normal (10x10)", "Difícil (15x15)"],
+                     error_message="No es una de las opciones")
+    print()
+    return [8, 10, 15][x]
+
+
+def start_new_game(difficulty):
     """
     Ask the user for name, create a Board and an Analyst, enter main game loop (which will return the score) and then
     show a 'Game Over' window with the name and the score
@@ -51,6 +65,7 @@ def start_new_game():
     print()
     name = ask_name()
 
+    Board.SIZE = difficulty
     board = Board()
     board.random_fill()
     analyst = BoardAnalyst(board)
